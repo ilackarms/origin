@@ -1,0 +1,1 @@
+job_service:apiserver_request_count:avg_rate5m = avg(rate(apiserver_request_count[5m])) by (job, service)

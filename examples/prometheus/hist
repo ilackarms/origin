@@ -1,0 +1,1000 @@
+  135  oc get svc
+  136  oc get rc
+  137  curl localhost:8001
+  138  curl localhost:8001/api
+  139  curl localhost:8001/api/v1
+  140  curl localhost:8001/api/v1/proxy
+  141  curl localhost:8001/api/v1/proxy/default
+  142  curl localhost:8001/api/v1/proxy/defaultpods/
+  143  curl localhost:8001/api/v1/proxy/defaultpod/
+  144  curl localhost:8001/api/v1/proxy/default/golang-1-p4t31
+  145  curl localhost:8001/api/v1/proxy/default/golang-1-p4t31:8080
+  146  curl localhost:8001/api/v1/proxy/default/pod/golang-1-p4t31:8080
+  147  curl localhost:8001/api/v1/proxy/defaultpod/golang-1-p4t31:8080
+  148  curl localhost:8001/api/v1/proxy/namespaces/defaultpod/golang-1-p4t31:8080
+  149  curl localhost:8001/api/v1/proxy/namespaces/default/golang-1-p4t31:8080
+  150  curl localhost:8001/api/v1/proxy/namespaces/default/pod/golang-1-p4t31:8080
+  151  oc  get pods
+  152  curl localhost:8001/api/v1/proxy/namespaces/default/pods/golang-1-p4t31:8080
+  153  curl localhost:8001/api/v1/proxy/namespaces/default/pods/golang-1-p4t31:8080 -v
+  154  curl localhost:8001/api/v1/namespaces/default/pods/golang-1-p4t31:8080/proxy
+  155  curl localhost:8001/api/v1/namespaces/default/pods/golang-1-p4t31:8080/proxy -v
+  156  ysave 2
+  157  cd /home/ilackarms/go/src/github.com/openshift/image-inspector
+  158  cd /home/ilackarms/workspace/manageiq/image-inspector-client
+  159  cd go/src/github.com/ilackarms/openshift-test-app/
+  160  cd /home/ilackarms/go/src/github.com/openshift/image-inspector
+  161  oc project management-infra
+  162  watch oc get pods
+  163  watch -n 0.2 oc get pods
+  164  oc project management-infra
+  165  watch -n 0.2 oc get pods
+  166  oc get pods
+  167  oc project management-infra
+  168  oc get pods
+  169  watch oc get pods
+  170  docker images
+  171  docker build -t docker.io/ilackarms/image-inspector:2.1 .
+  172  watch -n 0.2 oc get pods
+  173  docker build -t docker.io/ilackarms/image-inspector:2.1 .
+  174  watch -n 0.2 oc get pods
+  175  docker build -t docker.io/ilackarms/image-inspector:2.1 .
+  176  docker push docker.io/ilackarms/image-inspector:2.1 
+  177  watch -n 0.2 oc get pods
+  178  docker build -t docker.io/ilackarms/image-inspector:2.1 .
+  179  docker push docker.io/ilackarms/image-inspector:2.1 
+  180  watch -n 0.2 oc get pods
+  181  git st
+  182  git add -p
+  183  git st
+  184  git add -p
+  185  git ci -m "fix test filename"
+  186  git push
+  187  cd /home/ilackarms/go/src/github.com/ilackarms/openshift-test-app
+  188  curl localhost:8001/api/v1/namespaces/default/pods/golang-1-p4t31:8080/proxy -v
+  189  curl localhost:8001/api/v1/namespaces/management-infra/pods/manageiq-img-scan-cfc4a:8080/proxy/healthz -v
+  190  curl localhost:8001/api/v1/namespaces/default/pods/:8080/ -v
+  191  ls
+  192  oc new-app . --strategy=docker
+  193  oc start-build golang
+  194  oc start-build golang --from-dir .
+  195  oc status
+  196  oc describe dc/golang
+  197  oc logs bc/golang
+  198  oc status
+  199  oc get pods
+  200  curl localhost:8001/api/v1/namespaces/default/pods/golang-1-jhfq7:8080/ -v
+  201  curl localhost:8001/api/v1/namespaces/management-infra/pods/golang-1-jhfq7:8080/ -v
+  202  oc get pods
+  203  oc get svc
+  204  oc get dc
+  205  oc get rc
+  206  oc get pods
+  207  oc get context
+  208  oc config
+  209  oc config current-context
+  210  curl localhost:8001/api/v1/namespaces/management-infra/pods/golang-1-jhfq7:8080/proxy -v
+  211  curl localhost:8001/api/v1/namespaces/management-infra/pods/manageiq-img-scan-cfc4a:8080/proxy/healthz -v
+  212  curl localhost:8001/api/v1/namespaces/management-infra/pods/golang-1-jhfq7:8080/proxy/healthz -v
+  213  curl localhost:8001/api/v1/namespaces/management-infra/pods/golang-1-jhfq7:8080/proxy/healthz
+  214  curl localhost:8001/api/v1/namespaces/management-infra/pods/golang-1-jhfq7:8080/proxy/healthz -H "Hello: World"
+  215  curl localhost:8001/api/v1/namespaces/management-infra/pods/golang-1-jhfq7:8080/proxy/healthz -H "X-Auth-Token: foo"
+  216  curl localhost:8001/api/v1/namespaces/management-infra/pods/golang-1-jhfq7:8080/proxy/healthz -H "X-Auth-Token: foo" -H "Authorization: Bearer 1234"
+  217  curl localhost:8001/api/v1/namespaces/management-infra/pods/golang-1-jhfq7:8080/proxy/healthz -H "X-Auth-Token: foo" 
+  218  docker pull ilackarms/image-inspector
+  219  docker pull ilackarms/image-inspector:2.1
+  220  cd /home/ilackarms/workspace/manageiq/image-inspector-client
+  221  oc logs -f manageiq-img-scan-dc00d
+  222  watch -n 0.2 oc logs -f manageiq-img-scan-dc00d
+  223  watch -n 0.2 oc logs -f manageiq-img-scan-cfc4a
+  224  oc logs -f manageiq-img-scan-cfc4a
+  225  oc get namespaces
+  226  oc logs -f manageiq-img-scan-/api/v1/namespaces/management-infra/pods/manageiq-img-scan-cfc4a:8080/proxy/healthz
+  227  oc logs -f manageiq-img-scan-6ec80 
+  228  ls
+  229  oc logs -f manageiq-img-scan-de6c4
+  230  docker images
+  231  docker rmi docker.io/ilackarms/image-inspector:2.1
+  232  docker images
+  233  oc logs -f manageiq-img-scan-25666
+  234  docker rmi docker.io/ilackarms/image-inspector:2.1
+  235  docker rmi docker.io/ilackarms/image-inspector:2.1 -f
+  236  docker images
+  237  docker rmi -f docker.io/ilackarms/image-inspector
+  238  docker rmi -f docker.io/ilackarms/image-inspector:
+  239  docker rmi -f docker.io/ilackarms/image-inspector:<none>
+  240  docker rmi acc339a24a99
+  241  docker images
+  242  docker rmi 124fb348d2de 2114b63d333e
+  243  docker images
+  244  docker rmi c83c25e131ea
+  245  docker rmi ilackarms/openshift/image-inspector ilackarms/image-inspector
+  246  docker rmi ilackarms/openshift/image-inspector ilackarms/image-inspector:2.1
+  247  docker rmi ilackarms/openshift/image-inspector:2.1 ilackarms/image-inspector:2.1
+  248  docker images
+  249  oc logs -f manageiq-img-scan-a6e6d
+  250  b98d82a2eda074f8dd62a793b14c4706
+  251  56959889b4f19dcb8511b241098eae7e
+  252  oc logs -f manageiq-img-scan-5dcf9 
+  253  oc logs -f manageiq-img-scan-d873e
+  254  oc logs -f manageiq-img-scan-d71a7
+  255  git st
+  256  git add -p
+  257  git ci -m "change string hash key to symbol hash key"
+  258  git push
+  259  yload 2
+  260  cd /home/ilackarms/go/src/github.com/openshift/origin
+  261  oc proxy
+  262  oc status
+  263  docker images
+  264  oc describe manageiq-img-scan-dc00d
+  265  oc describe pod/manageiq-img-scan-dc00d
+  266  ./kill-it.sh 
+  267  ls
+  268  sudo rm -rf openshift.local.volumes/
+  269  sl
+  270  ls
+  271  cd openshift.local.volumes/
+  272  ls
+  273  sudo cd openshift.local.volumes/
+  274  ls
+  275  sudo su
+  276  ls
+  277  vim what-i-did.sh 
+  278  ./what-i-did.sh 
+  279  oc get pods
+  280  oc get pods --namespace all
+  281  oc get pods --all-namespaces
+  282  cat what-i-did.sh 
+  283  vim what-i-did.sh 
+  284  ./kill-it.sh 
+  285  ./what-i-did.sh 
+  286  ls
+  287  oc get pods
+  288  oc get sa
+  289  oc get sa --all-namespaces
+  290  oc get pods
+  291  oc proxy -h
+  292  oc proxy --port=8081
+  293  oc proxy --port=8001
+  294  ysave 3
+  295  rm openshift.local.log; sudo pkill -x openshift; (sudo env "PATH=$PATH" openshift start > openshift.local.log 2>&1 &) && tail -f openshift.local.log 
+  296  cd /home/ilackarms/workspace/manageiq/manageiq
+  297  python /usr/local/bin/ys -o /home/ilackarms/.ys/2
+  298  bundle exec rake evm:start && tail -f log/evm.log 
+  299  man rm 
+  300  oc sa get-token management-infra
+  301  oc sa get-token management-infra -n management-infra
+  302  oc project management-infra
+  303  oc get sa
+  304  oc sa get-token -n management-infra management-admin
+  305  oc get pods
+  306  oc get pods --all-namespaces
+  307  oc get images
+  308  bundle exec rake evm:stop #&& bundle exec rake evm:start && tail -f log/evm.log 
+  309  grep log/evm.log -e "using inspector-client"
+  310  less log/evm.log 
+  311  bundle exec rake evm:start && tail -f log/evm.log 
+  312  cat log/evm.log | grep Net::HTTPUnauthorized
+  313  less log/evm.log 
+  314  bundle exec rake evm:stop && bundle exec rake evm:start && tail -f log/evm.log 
+  315  git st
+  316  git add -p
+  317  bundle exec rake evm:stop && bundle exec rake evm:start && tail -f log/evm.log 
+  318  bundle exec rake evm:stop #&& bundle exec rake evm:start && tail -f log/evm.log 
+  319  bundle exec rake evm:start && tail -f log/evm.log 
+  320  bundle exec rake evm:stop && bundle exec rake evm:start && tail -f log/evm.log 
+  321  git st
+  322  git add -p
+  323  git ci -m "insert X-Auth-Token header on all requests to image inspector pod"
+  324  git push
+  325  git stash
+  326  git pull upstream master 
+  327  git reset HEAD~38 --hard
+  328  igt pull
+  329  git pull
+  330  git log
+  331  git pull -r upstream master 
+  332  git log
+  333  git push --force
+  334  bundle exec rake evm:stop #&& bundle exec rake evm:start && tail -f log/evm.log 
+  335  cd go/src/github.com/ilackarms/
+  336  ls
+  337  mkdir flow
+  338  cd flow/
+  339  touch main.go
+  340  rubymine.sh .
+  341  go run main.go 
+  342  ls /usr/bin/go/
+  343  rubymine.sh /usr/lib/golang/src/
+  344  rubymine.sh /usr/lib/golang/src/ &
+  345  rubymine.sh .
+  346  rubymine.sh /usr/lib/golang/src/
+  347  cd /usr/lib/golang/src/
+  348  ls
+  349  ls -a
+  350  rubymine.sh .
+  351  rubymine.sh . &
+  352  rubymine.sh . 
+  353  sudo env PATH=$PATH rubymine.sh .
+  354  cd -
+  355  rubymine.sh . &
+  356  nautilus ~/Downloads/
+  357  ls
+  358  cd lexer/
+  359  gingko bootstrap
+  360  ginkgo bootstrap
+  361  ginkgo generate lexer.go 
+  362  cd ..
+  363  ls
+  364  go run main.go 
+  365  go run main.go
+  366  cd go/src/
+  367  ls
+  368  mkdir gruby
+  369  cd gruby/
+  370  rubymine.sh .
+  371  kubectl 
+  372  kubectl get pods
+  373  kubectl status
+  374  kubectl --hel
+  375  kubectl get
+  376  kubectl get rc
+  377  kubectl get svc
+  378  kubectl get dc
+  379  kubectl get dc --all-namespaces
+  380  go get -v -u k8s.io/client-go/...
+  381  ls
+  382  go run gruby.go 
+  383  go build gruby.go 
+  384  ./gruby 
+  385  time ./gruby 
+  386  go build gruby.go 
+  387  time ./gruby 
+  388  echo gem \'kubeclient\'
+  389  echo gem \'kubeclient\' >> Gemfile
+  390  ls
+  391  bundle install
+  392  touch k8s_benchmark.rb
+  393  ir
+  394  irb
+  395  ruby k8s_benchmark.rb 
+  396  time ruby k8s_benchmark.rb 
+  397  ls
+  398  time gruby
+  399  time ./gruby 
+  400  time ruby k8s_benchmark.rb 
+  401  time ./gruby 
+  402  go build gruby.go 
+  403  time ./gruby 
+  404  go build gruby.go 
+  405  time ./gruby 
+  406  go build gruby.go 
+  407  time ./gruby 
+  408  go build gruby.go 
+  409  time ./gruby 
+  410  go build gruby.go 
+  411  time ./gruby 
+  412  go build gruby.go 
+  413  ./gruby 
+  414  go build gruby.go 
+  415  ./gruby 
+  416  ./gruby 10
+  417  ./gruby 100
+  418  usermod -a -G wireshark $USER
+  419  sudo usermod -a -G wireshark $USER
+  420  wireshark
+  421  cat /etc/group
+  422  membres
+  423  members
+  424  lid
+  425  sudo lid
+  426  sudo lid ilackarms
+  427  sudo ls /usr/bin/dumpcap 
+  428  sudo ls -l /usr/bin/dumpcap 
+  429  groups
+  430  sudo usermod -a -G ilackarms
+  431  sudo usermod -a -G ilackarms wireshark
+  432  sudo usermod -a -G wireshark
+  433  sudo usermod -a -G wireshark ilackarms
+  434  groups
+  435  sudo groupadd wireshark
+  436  sudo groups
+  437  sudo groups -h
+  438  sudo groups --help
+  439  man groups
+  440  groups ilackarms
+  441  sudo groups ilackarms
+  442  sudo ls -l /usr/bin/dumpcap 
+  443  /usr/bin/dumpc
+  444  /usr/bin/dumpcap
+  445  sudo ls -l /usr/bin/dumpcap 
+  446  ysave 3
+  447  rubymine.sh &
+  448  cd /home/ilackarms/workspace/manageiq/manageiq
+  449  cd /home/ilackarms/go/src/gruby
+  450  python /usr/local/bin/ys -o /home/ilackarms/.ys/3
+  451  cd /home/ilackarms/go/src/github.com/ilackarms/flow
+  452  docker ps -a
+  453  cd /home/ilackarms/go/src/gruby
+  454  python /usr/local/bin/ys -o /home/ilackarms/.ys/3
+  455  ls
+  456  cd poc/
+  457  ls
+  458  ruby poc.rb 
+  459  chgroup ilackarms /home/ilackarms/go/src/github.com/openshift/origin/openshift.local.config/master/admin.kubeconfig
+  460  chgrp ilackarms /home/ilackarms/go/src/github.com/openshift/origin/openshift.local.config/master/admin.kubeconfig
+  461  sudo chgrp ilackarms /home/ilackarms/go/src/github.com/openshift/origin/openshift.local.config/master/admin.kubeconfig
+  462  sudo chown ilackarms /home/ilackarms/go/src/github.com/openshift/origin/openshift.local.config/master/admin.kubeconfig
+  463  ruby poc.rb 
+  464  kill %1
+  465  ruby poc.rb 
+  466  rubymine.sh &
+  467  yload 3
+  468  cd /home/ilackarms/go/src/github.com/openshift/origin
+  469  tail -f openshift.local.log
+  470  ls
+  471  ./kill-it.sh 
+  472  ls
+  473  cat what-i-did.sh 
+  474  ./what-i-did.sh 
+  475  oc get pods
+  476  ssh root@vm-48-65.eng.lab.tlv.redhat.com
+  477  ssh root@vm-48-68.eng.lab.tlv.redhat.com
+  478  cd /home/ilackarms/go/src/github.com/openshift/image-inspector
+  479  oc get pods
+  480  oc get pods | grep Completed
+  481  watch oc get pods | grep Completed
+  482  watch (oc get pods | grep Completed)
+  483  watch #(oc get pods | grep Completed)
+  484  watch $(oc get pods | grep Completed)
+  485  watch oc get pods | grep Completed
+  486  oc get pods | grep Completed
+  487  ir
+  488  irb
+  489  oc get pods | grep Completed
+  490  oc get pods
+  491  kubectl version
+  492  oc get pods
+  493  swq
+  494  sesq
+  495  seq
+  496  seq 1
+  497  seq 1 2
+  498  seq 3 2
+  499  seq 3 10
+  500  seq 4256
+  501  seq 4256 10000
+  502  seq 4256 4258
+  503  oc get pods
+  504  oc get pods | grep Completed | wc -l
+  505  oc get pods | grep Pending | wc -l
+  506  oc get pods | grep Running | wc -l
+  507  oc get pods | grep Running
+  508  oc get pods
+  509  oc get pods | wc -l
+  510  oc get pods --format=json
+  511  oc get pods | grep Running
+  512  oc get pods | grep Pending | wc -l
+  513  oc get pods | grep Completed | wc -l
+  514  lcd /home/ilackarms/workspace/oc-test-stuff
+  515  python /usr/local/bin/ys -o /home/ilackarms/.ys/3
+  516  acd /home/ilackarms/go/src/github.com/openshift/image-inspector
+  517  curlocd /home/ilackarms/workspace/manageiq/manageiq
+  518  cd /home/ilackarms/workspace/manageiq/manageiq
+  519  cd /home/ilackarms/go/src/github.com/openshift/image-inspector
+  520  cd /home/ilackarms/go/src/scratch/basiccurl
+  521  python /usr/local/bin/ys -o /home/ilackarms/.ys/1
+  522  oc get pods
+  523  cd workspace/manageiq/manageiq/
+  524  ysave 1
+  525  be rake evm:start
+  526  cd /home/ilackarms/workspace/oc-test-stuff
+  527  gogland &
+  528  rubymine.sh &
+  529  yload 1
+  530  cd /home/ilackarms/go/src/github.com/openshift/origin
+  531  oc proxy
+  532  ls
+  533  rm openshift.local.log; sudo pkill -x openshift; (sudo env "PATH=$PATH" openshift start > openshift.local.log 2>&1 &) && tail -f openshift.local.log 
+  534  Discord &
+  535  cd /home/ilackarms/workspace/staging-cluster-scripts
+  536  cd workspace/
+  537  ls
+  538  cd oc-test-stuff/
+  539  ls
+  540  oc create -f busybox-sleep-pod.yaml 
+  541  oc get pods
+  542  oc logs busybox-sleep-pod
+  543  oc logs docker-registry-1-deploy
+  544  yload 1
+  545  cd /home/ilackarms/go/src/github.com/openshift/origin
+  546  /bin/bash ./what-i-did.sh
+  547  ./kill-it.sh && make clean build && ./what-i-did.sh 
+  548  rm openshift.local.log; sudo pkill -x openshift; (sudo env "PATH=$PATH" openshift start > openshift.local.log 2>&1 &) && tail -f openshift.local.log 
+  549  sudo pkill -x openshift
+  550  ./kill-it.sh && make clean build && ./what-i-did.sh 
+  551  ./kill-it.sh && ./what-i-did.sh 
+  552  cat what-i-did.sh 
+  553  oadm registry -n default --config=openshift.local.config/master/admin.kubeconfig
+  554  oc delete
+  555  oc delete registry
+  556  oc delete registry docker-registry
+  557  oc delete svc docker-registry
+  558  oadm registry -n default --config=openshift.local.config/master/admin.kubeconfig
+  559  oc get dc
+  560  oc delete dc docker-registry
+  561  oc get svc
+  562  oc get dc
+  563  oc delete svc docker-registry
+  564  oc get pods
+  565  oadm registry -n default --config=openshift.local.config/master/admin.kubeconfig
+  566  git st
+  567  git stash
+  568  ./kill-it.sh && make clean build && ./what-i-did.sh 
+  569  kill %1
+  570  tail -f openshift.local.log 
+  571  ./kill-it.sh && make clean build && ./what-i-did.sh 
+  572  less openshift.local.log 
+  573  oadm registry -n default --config=openshift.local.config/master/admin.kubeconfig
+  574  oc get pods
+  575  oc delete pod docker-registry-1-deploy
+  576  oc get pods
+  577  oadm registry -n default --config=openshift.local.config/master/admin.kubeconfig
+  578  oc get pods
+  579  ls
+  580  cd examples/
+  581  ls
+  582  cd hello-openshift/
+  583  ls
+  584  cat README.md 
+  585  oc create -f hello-pod.json 
+  586  oc get pods
+  587  cd ../../
+  588  oadm registry -n default --config=openshift.local.config/master/admin.kubeconfig
+  589  oc dc
+  590  oc get dc
+  591  oc delete docker-registry
+  592  oc delete dc docker-registry
+  593  oc delete svc docker-registry
+  594  oadm registry -n default --config=openshift.local.config/master/admin.kubeconfig
+  595  oc get pods
+  596  oc describe pod docker-registry-1-deploy
+  597  oc logs docker-registry-1-deploy
+  598  ./kill-it.sh && make clean build && ./what-i-did.sh 
+  599  ./kill-it.sh 
+  600  cd /home/ilackarms/workspace/manageiq/openshift-ansible
+  601  /usr/bin/python /usr/bin/ansible-playbook playbooks/byo/config.yml -i ../../staging-cluster-scripts/inventory_file
+  602  cd /home/ilackarms/go/src/github.com/ilackarms/MammonOnline
+  603  cd /home/ilackarms/workspace/gopath/src/github.com/openshift/image-inspector
+  604  oc proxy
+  605  cd /home/ilackarms/go/src/github.com/ilackarms/MammonOnline
+  606  cd go/src/k8s.io/kubernetes/
+  607  ls
+  608  git status
+  609  git add -p
+  610  git co .
+  611  git st
+  612  rm staging/src/k8s.io/apiserver/pkg/server/filters/compression.go
+  613  git remote show origin
+  614  git remote add upstream https://github.com/kubernetes/kubernetes
+  615  git remote rm origin
+  616  git remote add origin https://github.com/ilackarms/kubernetes
+  617  git st
+  618  git pull upstream master
+  619  ls
+  620  git ush
+  621  git push --set-upstream origin master
+  622  git pull upstream master 
+  623  gogland .
+  624  make release
+  625  sudo service docker restart
+  626  make release
+  627  yload 1
+  628  cd /home/ilackarms/go/src/github.com/openshift/origin
+  629  /bin/bash ./what-i-did.sh
+  630  ls
+  631  cat dockerconfig 
+  632  cd /home/ilackarms/go/src/scratch/basiccurl
+  633  python /usr/local/bin/ys -o /home/ilackarms/.ys/1
+  634  cd /home/ilackarms/workspace/manageiq/openshift-ansible
+  635  /usr/bin/python /usr/bin/ansible-playbook playbooks/byo/config.yml -i ../../staging-cluster-scripts/inventory_file
+  636  Discord &
+  637  df -h
+  638  ls /tmp/
+  639  rm -rf /tmp/*
+  640  sudo rm -rf /tmp/*
+  641  sudo dh -hs /tmp/
+  642  sudo df -hs /tmp/
+  643  sudo df -h /tmp/
+  644  sudo df -h
+  645  docker info
+  646  sudo df -h
+  647  fpaste 
+  648  fpaste
+  649  df -h
+  650  sudo pvdisplay > tmp
+  651  vim tmp 
+  652  sudo vgdisplay >> tmp
+  653  sudo lvdisplay >> tmp
+  654  cat tmp 
+  655  cat tmp  | fpaste
+  656  sudo baobab 
+  657  docker images
+  658  docker ps
+  659  docker ps -a
+  660  docker rm $(docker ps -aq)
+  661  sudo baobab 
+  662  cd /home/ilackarms/workspace/gopath/src/github.com/openshift/image-inspector
+  663  oc proxy
+  664  cd /home/ilackarms/go/src/github.com/ilackarms/MammonOnline
+  665  sudo su
+  666  cd /home/ilackarms
+  667  bash
+  668  tcd /home/ilackarms/go/src/scratch/basiccurl
+  669  cd /home/ilackarms
+  670  bash
+  671  cd /home/ilackarms
+  672  yload 1
+  673  cd /home/ilackarms/go/src/github.com/openshift/origin
+  674  cd /home/ilackarms/workspace/gopath/src/github.com/openshift/image-inspector
+  675  cd /home/ilackarms
+  676  cd /home/ilackarms/workspace/manageiq/openshift-ansible
+  677  cd /home/ilackarms/go/src/k8s.io/kubernetes
+  678  python /usr/local/bin/ys -o /home/ilackarms/.ys/1
+  679  ls
+  680  ls _output/
+  681  ls _output/bin/
+  682  which kubectl 
+  683  vim ~/.bash_profile 
+  684  source ~/.bash_profile 
+  685  which kubectl 
+  686  which kubectl 
+  687  vim ~/.bash_profile 
+  688  echo $PATH 
+  689  vim ~/.bash_profile 
+  690  which kubectl 
+  691  vim ~/.bashrc
+  692  vim .bash_profile 
+  693  which kubectl 
+  694  cd go/src/k8s.io/kubernetes/
+  695  ./hack/local-up-cluster.sh -o _output/bin/
+  696  sudo env PATH=$PATH ./hack/local-up-cluster.sh -o _output/bin/
+  697  less /tmp/kube-apiserver.log 
+  698  ./build/run.sh make
+  699  make clean hyperkube kubectl
+  700  echo $?
+  701  ls
+  702  kubectl version
+  703  sudo env PATH=$PATH ./hack/local-up-cluster.sh -o _output/bin/
+  704  git push
+  705  vim ~/.bash_profile 
+  706  oc
+  707  cd ~/go/src/k8s.io/kubernetes
+  708  ysave 2
+  709  export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
+  710  kubectl proxy
+  711  kubectl proxy -v 8
+  712  kubectl proxy --v 8
+  713  kubectl proxy --h
+  714  kubectl proxy --v=8
+  715  ysave kube
+  716  cd go/src/github.com/
+  717  ls
+  718  mkdir devscoreio
+  719  cd devscoreio/
+  720  git clone https://github.com/devscoreio/api
+  721  cd api/
+  722  gogland .
+  723  gogland &
+  724  export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
+  725  kubectl get pods
+  726  kubectl get namespaces
+  727  kubectl create pod
+  728  cd go/src/github.com/devscoreio/api/
+  729  wget http://data.githubarchive.org/2015-{01..12}-{01..30}-{0..23}.json.gz
+  730  ls
+  731  git st
+  732  tar xvf 2015-01-03-1.json.gz
+  733  unzip 2015-01-03-1.json.gz
+  734  gzip -h
+  735  gzip -d 2015-01-01-0.json.gz 
+  736  ls
+  737  cat 2015-01-01-0.json 
+  738  du -hs ./2015-01-0*
+  739  ls
+  740  rm 2015-01-0*
+  741  ls
+  742  cd go/src/github.com/openshift/origin/
+  743  git st
+  744  git co .
+  745  git pull upstream 
+  746  git pull upstream master
+  747  git push
+  748  ls
+  749  git st
+  750  ' dockerconfig
+  751          kill-it.sh
+  752          main.go
+  753          metrics-deployer.yaml
+  754          rebuild-and-run.sh
+  755          vendor/k8s.io/kubernetes/pkg/genericapiserver/filters/compression.go
+  756          what-i-did.sh
+  757  '
+  758  FILES=' dockerconfig
+  759          kill-it.sh
+  760          main.go
+  761          metrics-deployer.yaml
+  762          rebuild-and-run.sh
+  763          vendor/k8s.io/kubernetes/pkg/genericapiserver/filters/compression.go
+  764          what-i-did.sh
+  765  '
+  766  for i in $FILES; do echo $i; done
+  767  for i in $FILES; do echo $ifoo; done
+  768  docker run -p 9090:9090 -v /tmp/prometheus.yml:/etc/prometheus/prometheus.yml        prom/prometheus
+  769  cat > /tmp/prometheus.yml <<EOF
+  770  global:
+  771    scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  772    # Attach these labels to any time series or alerts when communicating with
+  773    # external systems (federation, remote storage, Alertmanager).
+  774    external_labels:
+  775      monitor: 'codelab-monitor'
+  776  # A scrape configuration containing exactly one endpoint to scrape:
+  777  # Here it's Prometheus itself.
+  778  scrape_configs:
+  779    # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  780    - job_name: 'prometheus'
+  781      # Override the global default and scrape targets from this job every 5 seconds.
+  782      scrape_interval: 5s
+  783      static_configs:
+  784        - targets: ['localhost:9090']
+  785  EOF
+  786  rm -r /tmp/prometheus.yml/
+  787  sudo rm -r /tmp/prometheus.yml/
+  788  cat > /tmp/prometheus.yml <<EOF
+  789  global:
+  790    scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  791    # Attach these labels to any time series or alerts when communicating with
+  792    # external systems (federation, remote storage, Alertmanager).
+  793    external_labels:
+  794      monitor: 'codelab-monitor'
+  795  # A scrape configuration containing exactly one endpoint to scrape:
+  796  # Here it's Prometheus itself.
+  797  scrape_configs:
+  798    # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  799    - job_name: 'prometheus'
+  800      # Override the global default and scrape targets from this job every 5 seconds.
+  801      scrape_interval: 5s
+  802      static_configs:
+  803        - targets: ['localhost:9090']
+  804  EOF
+  805  vim /tmp/prometheus.yml 
+  806  cd //tmp/
+  807  ls
+  808  mkdir prom
+  809  cd prom/
+  810  mv ../prometheus.yml .
+  811  ls
+  812  tar xvfz prometheus-*.tar.gz
+  813  wget https://github.com/prometheus/prometheus/releases/download/v1.6.1/prometheus-1.6.1.linux-amd64.tar.gz
+  814  tar xvfz prometheus-*.tar.gz
+  815  cd prometheus-1.6.1.linux-amd64/
+  816  ls
+  817  mv ../prometheus.yml .
+  818  mv prometheus.yml config.yml
+  819  ./prometheus --config-file config.yml 
+  820  ./prometheus --config.file config.yml 
+  821  atom .
+  822  touch kube.ymlk
+  823  mv kube.ymlk kube.yml
+  824  oc
+  825  which kubectl 
+  826  cd /tmp/prom/prometheus-1.6.1.linux-amd64
+  827  which kube
+  828  which kubectl 
+  829  oc apply   --filename https://raw.githubusercontent.com/PerfectMemory/openshift-prometheus/changes/manifests-all.yaml
+  830  oc apply   --filename https://raw.githubusercontent.com/PerfectMemory/openshift-prometheus/master/manifests-all.yaml
+  831  cd /home/ilackarms/go/src/k8s.io/kubernetes
+  832  python /usr/local/bin/ys -o /home/ilackarms/.ys/kube
+  833  cd /home/ilackarms/go/src/github.com/devscoreio/api
+  834  cd /home/ilackarms/go/src/github.com/devscoreio/api
+  835  echo $PATH 
+  836  export PATH=/usr/local/go/bin/:/home/ilackarms/.rbenv/shims:/home/ilackarms/.rbenv/bin:/usr/local/go/bin/:/home/ilackarms/.rbenv/shims:/home/ilackarms/.rbenv/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/ilackarms/.local/bin:/home/ilackarms/bin:/home/ilackarms/go/bin:/home/ilackarms/.local/bin:/home/ilackarms/bin:/home/ilackarms/go/bin:/home/ilackarms/go/src/github.com/openshift/origin/_output/local/bin/linux/amd64
+  837  which kubectl 
+  838  cd go/src/github.com/openshift/origin/
+  839  sudo env "PATH=$PATH" openshift start
+  840  ./kill-it.sh 
+  841  ls
+  842  cd openshift.local.volumes/
+  843  ls
+  844  sudo rm -rf openshift.local.volumes/
+  845  sudo ./kill-it.sh 
+  846  ls
+  847  sudo su
+  848  ./kill-it.sh 
+  849  ./what-i-did.sh 
+  850  ls
+  851  ysave openshift-simple
+  852  yload kube
+  853  cd /home/ilackarms/go/src/k8s.io/kubernetes
+  854  vim ~/.bash_profile 
+  855  cd /home/ilackarms/go/src/github.com/devscoreio/api
+  856  kubectl get pods
+  857  kubectl create -f https://coreos.com/operators/prometheus/latest/prometheus-operator.yaml
+  858  kubectl get pod
+  859  xsel
+  860  vim ~/.bash_profile 
+  861  source ~/.bash_profile 
+  862  kubectl
+  863  which kubectl
+  864  kubectl get pods
+  865  cd /tmp/prom/prometheus-1.6.1.linux-amd64
+  866  yload kube
+  867  cd /home/ilackarms/go/src/k8s.io/kubernetes
+  868  Discord &
+  869  sudo env PATH=$PATH ./hack/local-up-cluster.sh -o _output/bin/
+  870  minikube
+  871  curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.18.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+  872  minikube start
+  873  cd /home/ilackarms/go/src/k8s.io/kubernetes
+  874  python /usr/local/bin/ys -o /home/ilackarms/.ys/kube
+  875  export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
+  876  kubectl get pods
+  877  kubectl create -f https://coreos.com/operators/prometheus/latest/prometheus-operator.yaml
+  878  kubectl get pod
+  879  kubectl get prometheus
+  880  until kubectl get prometheus; do sleep 1; done
+  881  kubectl get pod
+  882  kubectl describe pod prometheus-operator-2275078676-dm81z
+  883  kubectl get node
+  884  kubectl get nodes
+  885  kubectl run nginx
+  886  kubectl run nginx:latest
+  887  docker images
+  888  kubectl run hello-prom --image docker.io/prom/prometheus:latest --port:9090
+  889  kubectl run hello-prom --image docker.io/prom/prometheus:latest
+  890  kubectl get pod
+  891  kubectl describe pod prometheus-operator-2275078676-dm81z
+  892  less /tmp/kubelet.log 
+  893  sudo rm /tmp/kube*
+  894  tail -f /tmp/kubelet.log
+  895  curl 127.0.0.1:10250
+  896  curl 127.0.0.1:10250 -v
+  897  sudo pkill -x openshift 
+  898  sudo rm /tmp/kube*
+  899  tail -f /tmp/kubelet.log
+  900  kubectl get pod
+  901  kubectl run hello-prom --image docker.io/prom/prometheus:latest
+  902  kubectl get pod
+  903  kubectl get rc
+  904  kubectl get rs
+  905  kubectl get dc
+  906  kubectl get 
+  907  kubectl get nodes
+  908  kubectl get pod
+  909  kubectl describe pod hello-prom-175240644-8938r
+  910  kubectl get pod
+  911  kubectl get svc
+  912  kubectl get
+  913  kubectl get rs
+  914  kubectl delete rs hello-prom-175240644
+  915  kubectl get pod
+  916  kubectl get rs
+  917  kubectl get deployments
+  918  kubectl delete deployment hello-prom
+  919  kubectl get pod
+  920  kubectl create -f https://coreos.com/operators/prometheus/latest/prometheus-operator.yaml
+  921  kubectl get pods
+  922  kubectl describe pod prometheus-operator-2275078676-62jrq
+  923  until kubectl get prometheus; do sleep 1; done
+  924  kubectl create -f https://coreos.com/operators/prometheus/latest/prometheus-k8s.yaml
+  925  kubectl get pod
+  926  kubectl get pod -w
+  927  kubectl get svc -w
+  928  kubectl get pod
+  929  kubectl get pod --all-namespaces
+  930  docker ps
+  931  kubectl get svc
+  932  kubectl get pod
+  933  kubectl get pod --all-namespaces
+  934  kubectl get prometheus
+  935  kubectl describe prometheus
+  936  kubectl describe prometheus prometheus-k8s
+  937  kubectl create -f https://coreos.com/operators/prometheus/latest/prometheus-k8s.yaml
+  938  kubectl delete prometheus prometheus-k8s
+  939  kubectl delete svc prometheus-k8s
+  940  kubectl create -f https://coreos.com/operators/prometheus/latest/prometheus-k8s.yaml
+  941  kubectl get pod
+  942  kubectl get pod --all-namespace
+  943  kubectl get pod --all-namespaces
+  944  kubectl get pod
+  945  kubectl get pod -w
+  946  less ~/Downloads/prometheus-k8s.yaml 
+  947  sudo env PATH=$PATH ./hack/local-up-cluster.sh -o _output/bin/
+  948  vim ~/.bash_profile 
+  949  cd /home/ilackarms/go/src/github.com/devscoreio/api
+  950  cd wo
+  951  ls
+  952  cd ~/workspace/
+  953  ls
+  954  cd scrap/
+  955  ls
+  956  mkdir prometheus
+  957  cd prometheus/
+  958  ls
+  959  pbpaste > prometheus-trp.yml
+  960  cat prometheus-trp.yml 
+  961  apiVersion: monitoring.coreos.com/v1alpha1
+  962  kind: Prometheus
+  963  metadata:
+  964    name: prometheus-k8s
+  965    labels:
+  966  pbpaste > prometheus-trp.yml
+  967  cat prometheus-trp.yml 
+  968  ls
+  969  kubectl create -f prometheus-trp.yml 
+  970  kubectl watch pods
+  971  kubectl get pods -w
+  972  kubectl get svc
+  973  kubectl get prometheus
+  974  wget https://coreos.com/operators/prometheus/latest/prometheus-k8s.yaml
+  975  cat prometheus-k8s.yaml 
+  976  kubectl get pod
+  977  kubectl get prometheus
+  978  kubectl rm prometheus prometheus-k8s
+  979  kubectl delete prometheus prometheus-k8s
+  980  kubectl create -f prometheus-k8s.yaml 
+  981  kubectl get svc
+  982  kubectl get pod
+  983  kubectl get pod -w
+  984  kubectl get pod --all-namespace
+  985  kubectl get pod --all-namespaces
+  986  kubectl get pod -w
+  987  curl localhost:30900 -v
+  988  kubectl get pod -w
+  989  kubectl get pod 
+  990  cd /home/ilackarms/go/src/github.com/openshift/origin/examples
+  991  gogland &
+  992  Discord &
+  993  oc get pods --all-namespaces
+  994  oc logs $(oc get pods | grep prometheus | awk '{print $1}')
+  995  oc project kube-default
+  996  oc project kube-system
+  997  oc logs $(oc get pods | grep prometheus | awk '{print $1}')
+  998  echo 'oc logs $(oc get pods | grep prometheus | awk '{print $1}')'
+  999  echo 'oc logs $(oc get pods | grep prometheus | awk '{print $1}')' > ~/workspace/oc-test-stuff/getlogs.sh
+ 1000  ls
+ 1001  git st
+ 1002  oc logs $(oc get pods | grep prometheus | awk '{print $1}')
+ 1003  oc process prometheus 
+ 1004  oc process prometheus | oc delete -f 
+ 1005  oc process prometheus | oc delete -f -
+ 1006  oc delete template prometheus
+ 1007  oc create -f prometheus/prometheus-2.yaml 
+ 1008  oc process prometheus
+ 1009  oc process prometheus-k8s 
+ 1010  oc create ns prometheus
+ 1011  oc process prometheus-k8s | oc create -f -
+ 1012  oc logs $(oc get pods | grep prometheus | awk '{print $1}')
+ 1013  oc logs $(oc get pods --all-namespaces | grep prometheus | awk '{print $1}')
+ 1014* 
+ 1015  oc logs $(oc get pods --all-namespaces | grep prometheus | awk '{print $1}')
+ 1016  oc project prometheus
+ 1017  oc logs $(oc get pods --all-namespaces | grep prometheus | awk '{print $1}')
+ 1018  oc get pods
+ 1019  oc describe pod prometheus-1743488665-nq93w
+ 1020  oc get pods
+ 1021  oc project prometheus
+ 1022  oc create ns prometheus
+ 1023  oc project prometheus
+ 1024  oc get pods
+ 1025  oc create -f prometheus/prometheus-2.yaml 
+ 1026  oc process prometheus-k8s | oc create -f -
+ 1027  oc get pods
+ 1028  oc logs $(oc get pods --all-namespaces | grep prometheus | awk '{print $1}')
+ 1029  oc logs $(oc get pods | grep prometheus | awk '{print $1}')
+ 1030  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1031  oc get svc
+ 1032  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1033  oc process prometheus-k8s | oc delee -f -
+ 1034  oc process prometheus-k8s | oc delete -f -
+ 1035  oc delete ns prometheus
+ 1036  oc project kube-system
+ 1037  oc create -f prometheus/prometheus.yaml 
+ 1038  oc processs prometheus | oc create -f -
+ 1039  oc process prometheus | oc create -f -
+ 1040  oc get cm
+ 1041  oc get pods
+ 1042  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1043  oc get svc
+ 1044  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1045  oc create -f prometheus/prometheus.yaml && oc process prometheus | oc create -f -
+ 1046  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1047  oc project kube-system
+ 1048  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1049  oc get svc
+ 1050  oc process prometheus | oc delete -f -
+ 1051  oc create -f prometheus/prometheus.yaml 
+ 1052  oc process prometheus | oc delete -f -
+ 1053  oc process prometheus | oc create -f -
+ 1054  oc get svc
+ 1055  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1056  oc process prometheus | oc delete -f -
+ 1057  oc process prometheus | oc create -f -
+ 1058  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1059  oc get svc
+ 1060  ping prometheus
+ 1061  oc process prometheus | oc delete -f -
+ 1062  oc delete template prometheus
+ 1063  oc create -f prometheus/prometheus-2.yaml && oc process prometheus | oc create -f -
+ 1064  oc get pods
+ 1065  oc get svc
+ 1066  while true; do curl localhost:8443/api/v1; ;done
+ 1067  while true; do curl localhost:8443/api/v1; done
+ 1068  while true; do curl localhost:8443/api/v1 > /dev/null; done
+ 1069  while true; do curl localhost:8443/api/v1 2&>1 > /dev/null; done
+ 1070  curl localhost:8443/api/v1 -v
+ 1071  curl https://localhost:8443/api/v1 -v
+ 1072  curl https://localhost:8443/api/v1 -v -k
+ 1073  curl https://localhost:8443/api/v1 -k
+ 1074  curl https://localhost:8443/api/v1 -k > /dev/null
+ 1075  curl https://localhost:8443/api/v1 -k 2>&1 > /dev/null
+ 1076  (curl https://localhost:8443/api/v1 -k > /dev/null) 2>&1
+ 1077  (curl https://localhost:8443/api/v1 -k > /dev/null)
+ 1078  while true; do curl https://localhost:8443/api/v1 -k 2&>1 > /dev/null; done
+ 1079  curl 172.17.0.3:9090
+ 1080  curl 172.17.0.3:9090/metrics
+ 1081  curl 172.17.0.3:9090/metrics/
+ 1082  curl 172.17.0.3:9090/metrics/api
+ 1083  curl 172.17.0.3:9090/metrics/
+ 1084  curl 172.17.0.3:9090/metrics/api
+ 1085  sudo service docker restart
+ 1086  curl 172.17.0.3:9090/metrics/api
+ 1087  oc project kube-system && oc create -f prometheus/prometheus-2.yaml && oc process prometheus | oc create -f -
+ 1088  oc get pods
+ 1089  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1090  oc get pods
+ 1091  oc get pods --all-namespaces
+ 1092  ls
+ 1093  cd prometheus/
+ 1094  ls
+ 1095  cd ..
+ 1096  oc project kube-system && oc create -f prometheus/prometheus-2.yaml && oc process prometheus | oc create -f -
+ 1097  oc get pods
+ 1098  oc get ns
+ 1099  oc get pods -n kube-system
+ 1100  oc get pods --all-namespaces
+ 1101  oc project default
+ 1102  oc get svc
+ 1103  ls
+ 1104  cd prometheus/
+ 1105  ls
+ 1106  touch prometheus.rules
+ 1107  oc process prometheus-k8s | oc delete -f -
+ 1108  oc process prometheus | oc delete -f -
+ 1109  oc get templates
+ 1110  oc get templates --all-namespaces
+ 1111  oc process prometheus --all-namespaces | oc delete -f -
+ 1112  oc process prometheus --all-namespaces
+ 1113  oc project k8s-system
+ 1114  oc project kube-system
+ 1115  oc process prometheus
+ 1116  oc process prometheus | oc delete --all-namepsaces -f
+ 1117  oc process prometheus | oc delete --all-namepsaces -f -
+ 1118  oc process prometheus | oc delete -f -
+ 1119  oc project defa
+ 1120  oc project default
+ 1121  oc project kube-system && oc create -f prometheus/prometheus-2.yaml && oc process prometheus | oc create -f -
+ 1122  oc project default && oc create -f prometheus/prometheus-2.yaml && oc process prometheus | oc create -f -
+ 1123  oc project default && oc create -f prometheus-2.yaml && oc process prometheus | oc create -f -
+ 1124  oc get pods
+ 1125  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1126  oc get svc
+ 1127  oc project default && oc create -f prometheus-2.yaml && oc process prometheus | oc create -f -
+ 1128  oc logs $(oc get pods | grep prometheus | awk '{print $1}') -f
+ 1129  oc get svc
+ 1130  xdg-open 172.30.10.176
+ 1131  xdg-open http://172.30.10.176
+ 1132  oc get svc | grep prometheus | awk '{print $2}'
+ 1133  xdg-open http://$(oc get svc | grep prometheus | awk '{print $2}')
+ 1134  history > hist
