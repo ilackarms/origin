@@ -83,6 +83,7 @@ objects:
         serviceAccountName: prometheus
         containers:
         - args:
+          - -alertmanager.url=http://alertmanager:9093/
           - -storage.local.retention=6h
           - -storage.local.memory-chunks=500000
           - -config.file=/etc/prometheus/prometheus.yml
@@ -105,13 +106,54 @@ objects:
           name: config-volume
         - emptyDir: {}
           name: data-volume
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+      app: alertmanager
+    name: alertmanager
+    namespace: "${NAMESPACE}"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: alertmanager
+    template:
+      metadata:
+        labels:
+          app: alertmanager
+        name: alertmanager
+      spec:
+        serviceAccountName: prometheus
+        containers:
+        - args:
+          - -config.file=/etc/alertmanager/alertmanager.yaml
+          image: quay.io/prometheus/alertmanager
+          imagePullPolicy: IfNotPresent
+          name: alertmanager
+          ports:
+          - containerPort: 9093
+            name: web
+          volumeMounts:
+          - mountPath: /etc/alertmanager
+            name: config-volume
+          - mountPath: /alertmanager
+            name: data-volume
+        restartPolicy: Always
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: alertmanager
+          name: config-volume
+        - emptyDir: {}
+          name: data-volume
 - apiVersion: v1
   kind: ConfigMap
   metadata:
     name: alertmanager
     namespace: "${NAMESPACE}"
   data:
-    config.yml: |
+    alertmanager.yaml: |
       global:
         # The auth token for Hipchat.
         hipchat_auth_token: E77DVnSNpdFmApVtAgaAUtLdbhFRWWdli3kmOcoE
@@ -160,7 +202,18 @@ objects:
     name: prometheus
     namespace: "${NAMESPACE}"
   data:
+    prometheus.rules: |
+      ALERT SecretRequestsHigh
+        IF sum(apiserver_request_count{resource="secrets"}) > 100
+        FOR 1s
+        ANNOTATIONS {
+          summary = "Instance {{ $labels.instance }} down",
+          description = "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.",
+        }
     prometheus.yml: |
+      rule_files:
+        - 'prometheus.rules'
+
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
       # and services to allow each to use different authentication configs.
@@ -281,40 +334,29 @@ objects:
         - source_labels: [__meta_kubernetes_service_name]
           action: replace
           target_label: kubernetes_name
-- apiVersion: extensions/v1beta1
-  kind: Deployment
-  metadata:
-    labels:
-      app: alertmanager
-    name: alertmanager
-    namespace: "${NAMESPACE}"
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: alertmanager
-    template:
-      metadata:
-        labels:
-          app: alertmanager
-        name: alertmanager
-      spec:
-        serviceAccountName: prometheus
-        containers:
-#        - args:
-#          - h
-        - image: quay.io/prometheus/alertmanager
-          imagePullPolicy: IfNotPresent
-          name: alertmanager
-          ports:
-          - containerPort: 9093
-            name: web
-          volumeMounts:
-          - mountPath: /etc/alertmanager
-            name: config-volume
-        restartPolicy: Always
-        volumes:
-        - configMap:
-            defaultMode: 420
-            name: alertmanager
-          name: config-volume
+
+      - job_name: 'kubernetes-pods'
+        kubernetes_sd_configs:
+        - role: pod
+
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          action: keep
+          regex: true
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+          target_label: __address__
+        - action: labelmap
+          regex: __meta_kubernetes_pod_label_(.+)
+        - source_labels: [__meta_kubernetes_namespace]
+          action: replace
+          target_label: kubernetes_namespace
+        - source_labels: [__meta_kubernetes_pod_name]
+          action: replace
+          target_label: kubernetes_pod_name
