@@ -1,16 +1,14 @@
 #!/bin/bash
 set -e -x
 export KUBECONFIG=openshift.local.config/master/admin.kubeconfig
-#docker daemon --insecure-registry 172.30.0.0/16 ##check out /usr/lib/systemd/system/docker.service
-#sudo systemctl stop firewalld
+#make sure docker daemon starts with --insecure-registry 172.30.0.0/16 
+#check out /usr/lib/systemd/system/docker.service
 sudo systemctl stop firewalld
 sudo env "PATH=$PATH" openshift start > openshift.local.log 2>&1 &
-sleep 1
-sleep 2
-sleep 3
+sleep 5
 sudo chmod +rw $KUBECONFIG
-sudo chgrp ilackarms $KUBECONFIG
-sudo chown ilackarms $KUBECONFIG
+sudo chgrp $USER $KUBECONFIG
+sudo chown $USER $KUBECONFIG
 oc login -u system:admin
 
 #manageiq stuff
@@ -54,10 +52,7 @@ oc adm policy add-scc-to-user privileged system:serviceaccount:management-infra:
 oc adm policy add-cluster-role-to-user self-provisioner system:serviceaccount:management-infra:management-admin
 oc adm policy add-cluster-role-to-user hawkular-metrics-admin system:serviceaccount:management-infra:management-admin
 
-tail -f openshift.local.log
-return
-
-#monitoring stuf
+#hawkular stuff
 oc project openshift-infra
 oc adm policy add-role-to-user view system:serviceaccount:openshift-infra:hawkular -n openshift-infra
 oc create -f - <<API
@@ -77,3 +72,6 @@ oc process -f metrics-deployer.yaml \
     -p HAWKULAR_METRICS_HOSTNAME=hawkular-metrics.example.com \
     | oc create -f -
 oc secrets new metrics-deployer nothing=/dev/null
+
+#start tailing logs
+tail -f openshift.local.log
