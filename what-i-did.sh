@@ -1,18 +1,6 @@
 #!/bin/bash
-set -e -x
+set -x #-e
 export KUBECONFIG=openshift.local.config/master/admin.kubeconfig
-<<<<<<< HEAD
-#docker daemon --insecure-registry 172.30.0.0/16 ##check out /usr/lib/systemd/system/docker.service
-#sudo systemctl stop firewalld
-sudo systemctl stop firewalld
-sudo env "PATH=$PATH" openshift start > openshift.local.log 2>&1 &
-sleep 1
-sleep 2
-sleep 3
-sudo chmod +rw $KUBECONFIG
-sudo chgrp ilackarms $KUBECONFIG
-sudo chown ilackarms $KUBECONFIG
-=======
 #make sure docker daemon starts with --insecure-registry 172.30.0.0/16 
 #check out /usr/lib/systemd/system/docker.service
 sudo systemctl stop firewalld
@@ -21,7 +9,6 @@ sleep 5
 sudo chmod +rw $KUBECONFIG
 sudo chgrp $USER $KUBECONFIG
 sudo chown $USER $KUBECONFIG
->>>>>>> master
 oc login -u system:admin
 
 #manageiq stuff
@@ -80,7 +67,7 @@ oadm policy add-role-to-user \
     edit system:serviceaccount:openshift-infra:metrics-deployer
 oadm policy add-cluster-role-to-user \
     cluster-reader system:serviceaccount:openshift-infra:heapster
-oc process -f metrics-deployer.yaml \
+oc process -f ../metrics-deployer.yaml \
     -p USE_PERSISTENT_STORAGE=false \
     -p HAWKULAR_METRICS_HOSTNAME=hawkular-metrics.example.com \
     | oc create -f -

@@ -12,7 +12,9 @@ objects:
   metadata:
     name: prometheus
     namespace: "${NAMESPACE}"
-- apiVersion: v1
+    annotations:
+      serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"prometheus"}}'
+- apiVersion: authorization.openshift.io/v1
   kind: ClusterRoleBinding
   metadata:
     name: prometheus-cluster-reader
@@ -22,6 +24,17 @@ objects:
   - kind: ServiceAccount
     name: prometheus
     namespace: "${NAMESPACE}"
+# Create a fully end-to-end TLS connection to the proxy
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: prometheus
+    namespace: "${NAMESPACE}"
+  spec:
+    to:
+      name: prometheus
+    tls:
+      termination: Reencrypt
 - apiVersion: v1
   kind: Service
   metadata:

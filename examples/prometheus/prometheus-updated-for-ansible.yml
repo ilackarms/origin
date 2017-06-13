@@ -1,4 +1,4 @@
-apiVersion: template.openshift.io/v1
+apiVersion: v1
 kind: Template
 metadata:
   name: prometheus
@@ -14,7 +14,8 @@ parameters:
   value: kube-system
 - description: The location of the proxy image
   name: IMAGE_PROXY
-  value: registry.svc.ci.openshift.org/ci/oauth-proxy:latest
+  value: docker.io/fabric8/openshift-auth-proxy:latest
+  #value: registry.svc.ci.openshift.org/ci/oauth-proxy:latest
 - description: The location of the prometheus image
   name: IMAGE_PROMETHEUS
   value: registry.svc.ci.openshift.org/ci/prometheus:latest
@@ -22,6 +23,16 @@ parameters:
   name: SESSION_SECRET
   generate: expression
   from: "[a-zA-Z0-9]{43}"
+- description: "Internal URL for the master, for authentication retrieval"
+  name: OAP_MASTER_URL
+  value: "https://kubernetes.default.svc.cluster.local"
+- description: "Public URL for the master, for sending the browser to authenticate"
+  name: OAP_PUBLIC_MASTER_URL
+  required: true
+- description: "Show extra proxy debug information at startup and during operations"
+  name: OAP_DEBUG
+  value: "true"
+
 objects:
 # Authorize the prometheus service account to read data about the cluster
 - apiVersion: v1
@@ -31,7 +42,7 @@ objects:
     namespace: "${NAMESPACE}"
     annotations:
       serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"prometheus"}}'
-- apiVersion: authorization.openshift.io/v1
+- apiVersion: v1
   kind: ClusterRoleBinding
   metadata:
     name: prometheus-cluster-reader
@@ -42,7 +53,7 @@ objects:
     name: prometheus
     namespace: "${NAMESPACE}"
 # Create a fully end-to-end TLS connection to the proxy
-- apiVersion: route.openshift.io/v1
+- apiVersion: v1
   kind: Route
   metadata:
     name: prometheus
@@ -52,6 +63,27 @@ objects:
       name: prometheus
     tls:
       termination: Reencrypt
+      destinationCACertificate: |
+        -----BEGIN CERTIFICATE-----
+        MIIDWjCCAkKgAwIBAgIJAJkUdYKwZ8xwMA0GCSqGSIb3DQEBCwUAMEIxCzAJBgNV
+        BAYTAlVTMRUwEwYDVQQHDAxEZWZhdWx0IENpdHkxHDAaBgNVBAoME0RlZmF1bHQg
+        Q29tcGFueSBMdGQwHhcNMTcwNjEyMTQ1MjI2WhcNMjAwNDAxMTQ1MjI2WjBCMQsw
+        CQYDVQQGEwJVUzEVMBMGA1UEBwwMRGVmYXVsdCBDaXR5MRwwGgYDVQQKDBNEZWZh
+        dWx0IENvbXBhbnkgTHRkMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+        q18mVbAI0G6Y5evhei9dYWhEfUwmVnzsS+WAJRHuKUrWeRXdbp1Lh8FluXCQLlbz
+        SjgMZcKx7PCP+xmYO4d0oWm+eHo/+GGcFe80ioQGKp99FLRu6/ynUBd2ArquPICj
+        dqwKrmYKu72pUn+goQlepjx6c4f8nS3ONElak84Plf5ok/IXfZm7Wz+/dRla1qYR
+        nlD12B7M6izvTkNX8jqFvhf6xeR6nvibTsD6Ac0/5wPVaHMvX55YjXIh78QLGI8V
+        HaEdVzmIm/bZglBGUrthEhhZO3oZnBRtSGdcKcQcocsIEm+O1g8QgW+yCE1Mu4/X
+        5qbDp2FIPxB4aNh6aeZsTwIDAQABo1MwUTAdBgNVHQ4EFgQU/tJSkBMo+5ZWMlAV
+        ceHl4YuXU3gwHwYDVR0jBBgwFoAU/tJSkBMo+5ZWMlAVceHl4YuXU3gwDwYDVR0T
+        AQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAGH3wLMKQwkWod1LcL6rLUAVl
+        E2t0HPkpexsG4lxwqh5rB8vt0tUUpK8yjC3qiMGjy18euJwuvxzvyhMxGgYR1c/r
+        DSV9AEWy3MYgUxyu8gj0gyFG696xrseSt0z/FUHB2BjECcLz9j0PYfth/uNVd1Ks
+        9cD5aIkYQ7K64vDHQixAd2ogG52+KGzfFD5pAiuMiOOotfW4/tgijsK2vBUPjhhH
+        HwDMCzXdrwO4TPrYYRladKAGjI4gkuATYGQneqoH9/+xFN8kz1M3rMQ89Ho9Ec4f
+        cRbGfXr1vKwKqMxqXBHrMMFMsCI1AaHgmUYIji1205FxFeyaOgnSyKX4+IVT4w==
+        -----END CERTIFICATE-----
 - apiVersion: v1
   kind: Service
   metadata:
@@ -99,35 +131,91 @@ objects:
       spec:
         serviceAccountName: prometheus
         containers:
-        - name: oauth-proxy
+        - name: "prometheus-proxy"
           image: ${IMAGE_PROXY}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
-          - containerPort: 8443
-            name: web
-          args:
-          - -https-address=:8443
-          - -email-domain=*
-          - -client-id=system:serviceaccount:${NAMESPACE}:prometheus
-          - -upstream=http://localhost:9090
-          - -provider=openshift
-          - -redirect-url=https:///oauth2/callback
-          - '-openshift-sar={"namespace": "${NAMESPACE}", "verb": "list", "resource": "services"}'
-          - -tls-cert=/etc/tls/private/tls.crt
-          - -tls-key=/etc/tls/private/tls.key
-          - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
-          - -cookie-secret-file=/etc/proxy/secrets/session_secret
-          - -skip-auth-regex=^/metrics
+            -
+              name: "oaproxy"
+              containerPort: 3000
+          env:
+            -
+              name: "OAP_BACKEND_URL"
+              value: "http://localhost:9090"
+            -
+              name: "OAP_AUTH_MODE"
+              value: "oauth2"
+            -
+              name: "OAP_TRANSFORM"
+              value: "user_header,token_header"
+            -
+              name: "OAP_OAUTH_ID"
+              value: prometheus-proxy
+            -
+              name: "OAP_MASTER_URL"
+              value: ${OAP_MASTER_URL}
+            -
+              name: "OAP_PUBLIC_MASTER_URL"
+              value: ${OAP_PUBLIC_MASTER_URL}
+            -
+              name: "OAP_LOGOUT_REDIRECT"
+              value: ${OAP_PUBLIC_MASTER_URL}/console/logout
+            -
+              name: "OAP_MASTER_CA_FILE"
+              value: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+            -
+              name: "OAP_DEBUG"
+              value: ${OAP_DEBUG}
           volumeMounts:
-          - mountPath: /etc/tls/private
-            name: prometheus-tls
-          - mountPath: /etc/proxy/secrets
-            name: secrets
+            - name: prometheus-proxy
+              mountPath: /secret
+              readOnly: true
+      volumes:
+        - name: prometheus-proxy
+          secret:
+            secretName: prometheus-proxy
+        # - name: oauth-proxy
+        #   image: ${IMAGE_PROXY}
+        #   imagePullPolicy: IfNotPresent
+        #   env:
+        #     - name: OCP_AUTH_PROXY_MEMORY_LIMIT
+        #       value: 64m
+        #     - name: OAP_BACKEND_URL
+        #       value: http://localhost:9090
+        #     -
+        #   ports:
+        #   - containerPort: 8443
+        #     name: web
+        #   args:
+        #   - --listen-port 8443
+        #   - --server-cert /etc/tls/private/tls.crt
+        #   - --server-key /etc/tls/private/tls.key
+        #   - --backend http://localhost:9090
+        #   - --callback-url https:///oauth2/callback
+        #   - --oauth-id system:serviceaccount:${NAMESPACE}:prometheus
+        #   - --oauth-secret /var/run/secrets/kubernetes.io/serviceaccount/token
+        #   - --public-master-url https://192.168.55.113:8443/A
+        #   # args:
+        #   # - -https-address=:8443
+        #   # - -email-domain=*
+        #   # - -client-id=system:serviceaccount:${NAMESPACE}:prometheus
+        #   # - -upstream=http://localhost:9090
+        #   # - -provider=openshift
+        #   # - -redirect-url=https:///oauth2/callback
+        #   # - '-openshift-sar={"namespace": "${NAMESPACE}", "verb": "list", "resource": "services"}'
+        #   # - -tls-cert=/etc/tls/private/tls.crt
+        #   # - -tls-key=/etc/tls/private/tls.key
+        #   # - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
+        #   # - -cookie-secret-file=/etc/proxy/secrets/session_secret
+        #   # - -skip-auth-regex=^/metrics
+#          volumeMounts:
+#          - mountPath: /etc/tls/private
+#            name: prometheus-tls
+#          - mountPath: /etc/proxy/secrets
+#            name: secrets
 
         - name: prometheus
           args:
-          - -storage.local.retention=6h
-          - -storage.local.memory-chunks=500000
           - -config.file=/etc/prometheus/prometheus.yml
           - -web.listen-address=localhost:9090
           image: ${IMAGE_PROMETHEUS}
