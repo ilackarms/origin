@@ -52,6 +52,11 @@ oc adm policy add-scc-to-user privileged system:serviceaccount:management-infra:
 oc adm policy add-cluster-role-to-user self-provisioner system:serviceaccount:management-infra:management-admin
 oc adm policy add-cluster-role-to-user hawkular-metrics-admin system:serviceaccount:management-infra:management-admin
 
+echo "STOPPPING HERE"
+
+tail -f openshift.local.log
+
+
 #hawkular stuff
 oc project openshift-infra
 oc adm policy add-role-to-user view system:serviceaccount:openshift-infra:hawkular -n openshift-infra
